@@ -34,6 +34,7 @@ public class ActorFactory {
 				return new BagScanner( lineNumber, newSecurity, terminal);
 			}
 		});
+		
 		final ActorRef newBodyScan = actorOf( new UntypedActorFactory(){
 			// Inline override of default constructor call to one implemented
 			@Override
@@ -41,6 +42,7 @@ public class ActorFactory {
 				return new BodyScanner( lineNumber, newSecurity, terminal);
 			}
 		});
+		
 		final ActorRef newQueue = actorOf( new UntypedActorFactory(){
 			// Inline override of default constructor call to one implemented
 			@Override
@@ -66,7 +68,6 @@ public class ActorFactory {
 		});
 		newActor.start();
 		return newActor;
-		
 	}
 	
 	public static ActorRef makeDocumentChecker( final ActorRef terminal, final ActorRef[] queues){
