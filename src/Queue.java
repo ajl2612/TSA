@@ -22,7 +22,8 @@ public class Queue extends AbstractActor {
 	//boolean scannerClear = true;
 
 	final ActorRef baggageScanner; 
-	final ActorRef bodyScanner; 
+	final ActorRef bodyScanner;
+	private final int stationNumber;
 	
 	private ConcurrentLinkedQueue<Person> personQueue;
 	private ConcurrentLinkedQueue<Baggage> baggageQueue;
@@ -32,6 +33,7 @@ public class Queue extends AbstractActor {
 	
 	public Queue(int stationNumber, ActorRef bodyScan, ActorRef bagScan, ActorRef terminal){
 		super(ActorFactory.QUEUE_SPACE, terminal);
+		this.stationNumber = stationNumber;
 		baggageScanner = bagScan;
 		bodyScanner = bodyScan;
 		personQueue = new ConcurrentLinkedQueue();
@@ -42,19 +44,32 @@ public class Queue extends AbstractActor {
 	public void onReceive(Object message){
 		if (message instanceof Person) {
 			Person p = (Person)message;
-			sendToBodyScan(p);
-			sendToBagScan(p.getBaggage());
+			printToTerminal("Person: " + p.getPersonId() + "enters queue " 
+					+ stationNumber + ".");
+			queuePersonInLine( (Person)message );
 		}
 		else if( message instanceof EndDay){
 			baggageScanner.tell((EndDay)message);
 			bodyScanner.tell((EndDay)message);
-			System.out.println("Queue shutting down" );
+			getContext().stop();
 		}else{
 			System.err.println("Queue recieved invalid message: " + 
 					message.toString());
 		}
 	}
 
+	@Override
+	public void postStop() {
+		printToTerminal( "Queue " + stationNumber + "Closed" );
+	}
+	
+	public boolean queuePersonInLine(Person p){
+		boolean personStatus, bagStatus = false;
+		personStatus = personQueue.add(p);
+		bagStatus = baggageQueue.add(p.getBaggage());
+		return (personStatus && bagStatus);
+	}
+	
 	/**
 	 * Sends a person object to the bag scanner
 	 */

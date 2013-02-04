@@ -1,7 +1,5 @@
 import java.util.Random;
-
 import akka.actor.ActorRef;
-import akka.actor.UntypedActor;
 
 /**
  * Stub
@@ -21,7 +19,7 @@ public class BodyScanner extends AbstractActor {
 	private Random r = new Random();
 	
 	public BodyScanner(int stationNumber, ActorRef security, ActorRef terminal){
-		super(ActorFactory.QUEUE_SPACE, terminal);
+		super(ActorFactory.SCAN_SPACE, terminal);
 		this.security = security;
 		this.stationNumber = stationNumber;
 	}
@@ -39,7 +37,18 @@ public class BodyScanner extends AbstractActor {
 				results = new BodyScanResults((Person)message, didPass);
 				security.tell(results);
 			}
+		}else if( message instanceof EndDay){
+			security.tell((EndDay)message);
+			getContext().stop();
+		}else{
+			System.err.println("BodyScan recieved invalid message: " + 
+					message.toString());
 		}
+	}
+	
+	@Override
+	public void postStop() {
+		printToTerminal( "Body Scanner " + stationNumber + "Closed" );
 	}
 	
 	public boolean checkPerson() throws InterruptedException{

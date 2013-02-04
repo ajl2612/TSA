@@ -1,9 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 import akka.actor.ActorRef;
-import akka.actor.UntypedActor;
-import static akka.actor.Actors.actorOf;
 
 /**
  * Stub
@@ -12,14 +8,22 @@ import static akka.actor.Actors.actorOf;
  * @author Carol
  *
  */
-public class Security extends UntypedActor {
+public class Security extends AbstractActor {
 	
-	Person person;
-	boolean passCheck;
+	private final ActorRef jail;
+	private final int stationNumber;
 	
-    List<Person> jail = new ArrayList<Person>();
-    HashMap<Person, Boolean> awaiting = new HashMap<Person, Boolean>();
+	private int numScannersClosed;
+	private ConcurrentMap<Person,Boolean> awaitingBaggage;
+	private ConcurrentMap<Person,Boolean> awaitingOwners;
 	
+    public Security(int stationNumber, ActorRef jail, ActorRef terminal){
+    	super(ActorFactory.SECURITY_SPACE, terminal);
+		this.jail = jail;
+		this.stationNumber = stationNumber;
+		numScannersClosed = 0;
+    }
+    
     /*
      * This will need to be reworked as actors cannot receive messages
      * simultaneously. Instead, Security will accept a message formed
@@ -27,28 +31,29 @@ public class Security extends UntypedActor {
      * from BodyScanner) and the Person's bags (sent from BagScanner)
      */
 	public void onReceive(Object message) throws Exception{
-		if (message instanceof Boolean) {
-			passCheck = (Boolean)message2;
-		}
 		
-		if (message instanceof Person) {
-			person = (Person)message1;
-			if(awaiting.containsKey(person.getPersonId())) {
-				if (awaiting.get(person.getPersonId()) && passCheck) {
-					System.out.println("Person: " + person.getPersonId() + " has passed security.");
-				}
-				else {
-					sendToJail(person);
-				}
+		if (message instanceof BodyScanResults) {
+			//do SWAG
+		}else if( message instanceof BagScanResults){
+			//do SWAG
+		}else if( message instanceof EndDay){
+			if(++numScannersClosed == 2){
+				jail.tell((EndDay)message);
+				getContext().stop();
 			}
-			else {
-				awaiting.put(person, passCheck);
-			}
+		}else{
+			System.err.println("Security recieved invalid message: " + 
+					message.toString());
 		}
 	}
 	
+	@Override
+	public void postStop() {
+		printToTerminal( "Security " + stationNumber + "Closed" );
+	}
+	
 	public void sendToJail(Person person){
-		jail.add(person);
-		System.out.println("Person: " + person.getPersonId() + " has been sent to jail.");
+		
+		printToTerminal("Person: " + person.getPersonId() + " has been sent to jail.");
 	}
 }

@@ -1,7 +1,6 @@
 import java.util.Random;
-
 import akka.actor.ActorRef;
-import akka.actor.UntypedActor;
+
 
 /**
  * Stub
@@ -22,7 +21,7 @@ public class BagScanner extends AbstractActor {
 	
 	
 	public BagScanner(int stationNumber, ActorRef security, ActorRef terminal){
-		super(ActorFactory.QUEUE_SPACE, terminal);
+		super(ActorFactory.SCAN_SPACE, terminal);
 		this.security = security;
 		this.stationNumber = stationNumber;
 	}
@@ -40,7 +39,18 @@ public class BagScanner extends AbstractActor {
 				results = new BagScanResults((Baggage)message, didPass);
 				security.tell(results);
 			}
+		}else if( message instanceof EndDay){
+			security.tell((EndDay)message);
+			getContext().stop();
+		}else{
+			System.err.println("BagScan recieved invalid message: " + 
+					message.toString());
 		}
+	}
+	
+	@Override
+	public void postStop() {
+		printToTerminal( "Baggage Scanner " + stationNumber + "Closed" );
 	}
 	
 	public boolean checkBags(Baggage bags) throws InterruptedException{

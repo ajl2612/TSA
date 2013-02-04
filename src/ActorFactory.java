@@ -1,3 +1,4 @@
+import akka.actor.Actor;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActorFactory;
 import static akka.actor.Actors.actorOf;
@@ -25,14 +26,16 @@ public class ActorFactory {
 		
 	}
 	
-	public static ActorRef makeDocumentChecker( ActorRef[] queues, ActorRef terminal){
+	public static ActorRef makeDocumentChecker( final ActorRef terminal, final ActorRef[] queues){
 		ActorRef newActor = actorOf( new UntypedActorFactory(){
 			// Inline override of default constructor call to one implemented
 			@Override
 			public Actor create(){
-				return new DocumentChecker()
+				return new DocumentChecker(terminal, queues);
 			}
 		});
+		newActor.start();
+		return newActor;
 	}
 	
 }

@@ -35,13 +35,18 @@ public class DocumentChecker extends AbstractActor{
 			for(int i = 0; i < stations.length; i++){
 				stations[i].tell((EndDay)message);
 			}
-			System.out.println("DocumentChecker shutting down");
+			getContext().stop();
 		}else{
 			System.err.println("DocumentChecker recieved invalid message: " + 
 					message.toString());
 		}
 	}
 
+	@Override
+	public void postStop() {
+		printToTerminal( "Document Check Closed" );
+	}
+	
 	public void trySendPersonToQueue(Person person){
 		Random r = new Random();
 		if(r.nextInt(5) == 0) {

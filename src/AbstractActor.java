@@ -21,4 +21,5 @@ public abstract class AbstractActor extends UntypedActor{
 	public int getSpacingSize(){
 		return terminalSpacing;
 	}
+	
 }
