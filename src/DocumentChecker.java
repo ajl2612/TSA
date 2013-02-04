@@ -48,12 +48,15 @@ public class DocumentChecker extends AbstractActor{
 			rejectPerson(person);
 		}
 		else {
+			printToTerminal("Person: " + person.getPersonId() + "sent to queue " 
+					+ currentQueue + ".");
 			stations[currentQueue++].tell(person);
 			currentQueue = currentQueue % stations.length;
 		}
 	}
 	
 	public void rejectPerson(Person person){
-		System.out.println("Person: " + person.getPersonId() + " has been turned away.");
+		printToTerminal("Person: " + person.getPersonId() 
+				+ "failed Document Check and has been sent away.");
 	}
 }

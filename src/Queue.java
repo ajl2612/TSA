@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import static akka.actor.Actors.actorOf;
@@ -19,28 +21,33 @@ public class Queue extends AbstractActor {
 	//LinkedList<Person> queue = new LinkedList<Person>();
 	//boolean scannerClear = true;
 
-	final ActorRef queueBag; 
-	final ActorRef queueBody; 
+	final ActorRef baggageScanner; 
+	final ActorRef bodyScanner; 
 	
-	public Queue(){
-		queueBag = actorOf(BagScanner.class).start();
-		queueBody = actorOf(BodyScanner.class).start();
-		security = actorOf(Security.class).start();
-		ScanConfigure conf = new ScanConfigure( security );
-		queueBag.tell(conf);
-		queueBody.tell(conf);
+	private ConcurrentLinkedQueue<Person> personQueue;
+	private ConcurrentLinkedQueue<Baggage> baggageQueue;
+	
+	private boolean bagScanReady;
+	private boolean bodyScanReady;
+	
+	public Queue(int stationNumber, ActorRef bodyScan, ActorRef bagScan, ActorRef terminal){
+		super(ActorFactory.QUEUE_SPACE, terminal);
+		baggageScanner = bagScan;
+		bodyScanner = bodyScan;
+		personQueue = new ConcurrentLinkedQueue();
+		baggageQueue = new ConcurrentLinkedQueue();
 	}
 	
 	
-	public void onReceive(Object message) {
+	public void onReceive(Object message){
 		if (message instanceof Person) {
 			Person p = (Person)message;
 			sendToBodyScan(p);
 			sendToBagScan(p.getBaggage());
 		}
 		else if( message instanceof EndDay){
-			queueBag.tell((EndDay)message);
-			queueBody.tell((EndDay)message);
+			baggageScanner.tell((EndDay)message);
+			bodyScanner.tell((EndDay)message);
 			System.out.println("Queue shutting down" );
 		}else{
 			System.err.println("Queue recieved invalid message: " + 
@@ -52,13 +59,13 @@ public class Queue extends AbstractActor {
 	 * Sends a person object to the bag scanner
 	 */
 	public void sendToBagScan(Baggage bags){
-		queueBag.tell(bags);
+		baggageScanner.tell(bags);
 	}
 	
 	/**
 	 * Sends a person object to the body scanner
 	 */
 	public void sendToBodyScan(Person per) {
-		queueBody.tell(per);
+		bodyScanner.tell(per);
 	}
 }

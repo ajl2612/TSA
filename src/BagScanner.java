@@ -11,11 +11,21 @@ import akka.actor.UntypedActor;
  * @category Andy "The Guy" Lyne
  *
  */
-public class BagScanner extends UntypedActor {
+public class BagScanner extends AbstractActor {
 	
-	private int CHECK_TIME = 2000;
+	private final int CHECK_TIME = 2000;
+	private final int PERCENT_FAIL = 20;
+	
+	private final int stationNumber;
 	private ActorRef security;
 	private Random r = new Random();
+	
+	
+	public BagScanner(int stationNumber, ActorRef security, ActorRef terminal){
+		super(ActorFactory.QUEUE_SPACE, terminal);
+		this.security = security;
+		this.stationNumber = stationNumber;
+	}
 	
 	public void onReceive(Object message){
 		if (message instanceof Baggage){
@@ -31,18 +41,19 @@ public class BagScanner extends UntypedActor {
 				security.tell(results);
 			}
 		}
-		else if (message instanceof ScanConfigure){
-			security = ((ScanConfigure)message).getSecurity();
-		}
 	}
 	
 	public boolean checkBags(Baggage bags) throws InterruptedException{
 		boolean didPass = true;
 		for( int i=0; i< bags.getNumBags(); i++){
 			Thread.sleep(CHECK_TIME);
-			if(r.nextInt(5) == 0)
+			if(r.nextInt(100) < PERCENT_FAIL)
 				didPass = false;
 		}
 		return didPass;
+	}
+	
+	public int getStationNumber(){
+		return stationNumber;
 	}
 }

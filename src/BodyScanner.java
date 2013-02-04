@@ -11,11 +11,20 @@ import akka.actor.UntypedActor;
  * @version The Andy Lyne Version
  *
  */
-public class BodyScanner extends UntypedActor {
+public class BodyScanner extends AbstractActor {
 	
 	private int CHECK_TIME = 2000;
+	private final int PERCENT_FAIL = 20;
+	
+	private final int stationNumber;
 	private ActorRef security;
 	private Random r = new Random();
+	
+	public BodyScanner(int stationNumber, ActorRef security, ActorRef terminal){
+		super(ActorFactory.QUEUE_SPACE, terminal);
+		this.security = security;
+		this.stationNumber = stationNumber;
+	}
 	
 	public void onReceive(Object message) throws Exception {
 		if (message instanceof Person){
@@ -31,14 +40,15 @@ public class BodyScanner extends UntypedActor {
 				security.tell(results);
 			}
 		}
-		else if (message instanceof ScanConfigure){
-			security = ((ScanConfigure)message).getSecurity();
-		}
 	}
 	
 	public boolean checkPerson() throws InterruptedException{
 		// Scanning a person takes 2 seconds 
 		Thread.sleep(CHECK_TIME);
-		return (r.nextInt(5) == 0);
+		return (r.nextInt(100) < PERCENT_FAIL);
+	}
+	
+	public int getStationNumber(){
+		return stationNumber;
 	}
 }
