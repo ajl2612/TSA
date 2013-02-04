@@ -10,10 +10,10 @@ public class Jail extends AbstractActor {
 	
 	private int numStationsClosed;
 	
-	public Jail(int numStations, ActorRef terminal){
+	public Jail(ActorRef terminal, int numSecurityStations){
     	super(ActorFactory.JAIL_SPACE, terminal);
 		jailed = new ArrayList<Person>();
-		numSecurityStations = numStations;
+		this.numSecurityStations = numSecurityStations;
 		numStationsClosed = 0;
     }
 	
