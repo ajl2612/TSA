@@ -38,6 +38,8 @@ public class Queue extends AbstractActor {
 		bodyScanner = bodyScan;
 		personQueue = new ConcurrentLinkedQueue();
 		baggageQueue = new ConcurrentLinkedQueue();
+		bodyScanReady = true;
+		bagScanReady = true;
 	}
 	
 	
@@ -47,6 +49,14 @@ public class Queue extends AbstractActor {
 			printToTerminal("Person: " + p.getPersonId() + "enters queue " 
 					+ stationNumber + ".");
 			queuePersonInLine( (Person)message );
+		}
+		else if( message instanceof NextBag){
+
+		}
+		else if( message instanceof NextBody){
+			baggageScanner.tell((EndDay)message);
+			bodyScanner.tell((EndDay)message);
+			getContext().stop();
 		}
 		else if( message instanceof EndDay){
 			baggageScanner.tell((EndDay)message);
