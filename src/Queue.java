@@ -122,10 +122,24 @@ public class Queue extends AbstractActor {
 		 * processed.  
 		 */
 		else if( message instanceof EndDay){
-			printToTerminal("Queue " + stationNumber + "received end of day message");
-			baggageScanner.tell((EndDay)message);
-			bodyScanner.tell((EndDay)message);
-			getContext().stop();
+			/*
+			 * Both queues are empty, ready to shutdown. 
+			 */
+			if(bodyQueue.isEmpty() && baggageQueue.isEmpty()){
+				printToTerminal("Queue " + stationNumber + 
+						"received end of day message");
+				baggageScanner.tell((EndDay)message);
+				bodyScanner.tell((EndDay)message);
+				getContext().stop();
+			}
+			/*
+			 * One or both of they queues still have elements in them waiting 
+			 * to be processed. Send the EndDay message back to self to delay 
+			 * until both are empty. 
+			 */
+			else{
+				self().tell((EndDay)message);
+			}
 		}
 		
 		/*
