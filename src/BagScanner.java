@@ -80,6 +80,8 @@ public class BagScanner extends AbstractActor {
 		 * If instance of EndDay pass message along to Security
 		 */
 		else if( message instanceof EndDay){
+			printToTerminal("BagScanner " + stationNumber + 
+					"received end of day message");
 			security.tell((EndDay)message);
 			getContext().stop();
 		}
@@ -103,7 +105,7 @@ public class BagScanner extends AbstractActor {
 	}
 	
 	/**
-	 * Cjecks the givven baggage for problems. Each bag contained in the 
+	 * Checks the given baggage for problems. Each bag contained in the 
 	 * baggage is checked individually. If any bag in the Baggage unit fails, 
 	 * the whole unit fails the check. Baggage packages with zero bags 
 	 * automatically pass. 

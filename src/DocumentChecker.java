@@ -96,7 +96,7 @@ public class DocumentChecker extends AbstractActor{
 	 * security queue. The current security station is then incremented so 
 	 * that new passengers are added in a cycle.  
 	 * 
-	 * @param person - Person to potentiallybe queued 
+	 * @param person - Person to potentially be queued 
 	 */
 	public void trySendPersonToQueue(Person person){
 		Random r = new Random();
