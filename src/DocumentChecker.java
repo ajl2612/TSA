@@ -9,7 +9,7 @@ import akka.actor.ActorRef;
  * 
  * @author Chris
  * @author Carol
- * @MasterOfConcurrency Andrew Lyne
+ * @MasterOfConcurrency Andrew Lyne III
  *
  */
 public class DocumentChecker extends AbstractActor{
