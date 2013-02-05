@@ -62,6 +62,7 @@ public class DocumentChecker extends AbstractActor{
 		 * in the array then shut self down. 
 		 */
 		else if( message instanceof EndDay ){
+			printToTerminal("Document Cecker recieves End of Day message");
 			for(int i = 0; i < stations.length; i++){
 				printToTerminal("End of Day message sent to queue " + i );
 				stations[i].tell((EndDay)message);
