@@ -52,8 +52,8 @@ public class Queue extends AbstractActor {
 	/**
 	 * Constructor for Queue. 
 	 * 
-	 * @param stationNumber - what number security station this queue belongs 
-	 * 		to
+	 * @param stationNumber - what number security station this queue 
+	 * 		belongs to
 	 * @param bodyScan - BodyScanner Actor to send People to
 	 * @param bagScan - BaggageScanner Actor to send Baggage to
 	 * @param terminal - Terminal Actor to send log messages to
@@ -68,6 +68,7 @@ public class Queue extends AbstractActor {
 		bodyScanReady = true;
 		bagScanReady = true;
 	}
+	
 	/**
 	 * Redefinition of OnRecieve method from Actor. This class handles messages
 	 * of EndDay, NextBag, NextBody and Person types.  
@@ -200,5 +201,13 @@ public class Queue extends AbstractActor {
 				+ " sent to body scanner");
 		bodyScanReady = false;
 		bodyScanner.tell(toSend);
+	}
+	
+	/**
+	 * Accessor for which security station this queue belongs to. 
+	 * @return - station number
+	 */
+	public int getStationNumber(){
+		return stationNumber;
 	}
 }

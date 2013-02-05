@@ -57,7 +57,7 @@ public class DocumentChecker extends AbstractActor{
 					" arrives at Document Checker.");
 			trySendPersonToQueue( p );
 		}
-		/**
+		/*
 		 * If instance of EndDay message, pass the message along to all queues 
 		 * in the array then shut self down. 
 		 */

@@ -57,6 +57,10 @@ public class BodyScanner extends AbstractActor {
 		return (r.nextInt(100) < PERCENT_FAIL);
 	}
 	
+	/**
+	 * Accessor for which security station this scanner belongs to. 
+	 * @return - station number
+	 */
 	public int getStationNumber(){
 		return stationNumber;
 	}
