@@ -1,5 +1,11 @@
 import akka.actor.UntypedActor;
 
+/**
+ * Actor with the sole purpose of receiving messages, formatting them and 
+ * printing them to a log. 
+ * 
+ * @author Andrew Lyne
+ */
 public class Terminal extends UntypedActor{
 	
 	public void onReceive( Object message ){
