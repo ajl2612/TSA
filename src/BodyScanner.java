@@ -64,6 +64,7 @@ public class BodyScanner extends AbstractActor {
 			}finally{
 				results = new BodyScanResults((Person)message, didPass);
 				security.tell(results);
+				this.getContext().reply( new NextBody() );
 			}
 		}
 		/*
