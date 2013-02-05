@@ -53,6 +53,9 @@ public class BodyScanner extends AbstractActor {
 	 * of EndDay and Baggage types.  
 	 */
 	public void onReceive(Object message) throws Exception {
+		/*
+		 * If instance of Person, scan the person. Report the findings to the security guard.
+		 */
 		if (message instanceof Person){
 			BodyScanResults results;
 			boolean didPass = false;
