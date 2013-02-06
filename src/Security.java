@@ -84,7 +84,7 @@ public class Security extends AbstractActor {
 		else if( message instanceof EndDay){
 			numScannersClosed++;
 			printToTerminal("Security " + stationNumber + 
-					"recieved end of day message " + numScannersClosed);
+					" recieved end of day message " + numScannersClosed);
 			if(numScannersClosed == 2){
 				printToTerminal("Security " + stationNumber + 
 						" sent end of day message to jail");
@@ -133,7 +133,7 @@ public class Security extends AbstractActor {
 	public void receivePerson(BodyScanResults r){
 		Person p = r.getPerson();
 		printToTerminal("BodyScan results for Person" +
-				p.getPersonId() + "arrived at security");
+				p.getPersonId() + " arrived at security");
 		if(awaitingOwners.containsKey(p)){
 			printToTerminal("Person "+ p.getPersonId() + 
 					" has found their bags");

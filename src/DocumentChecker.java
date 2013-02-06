@@ -114,7 +114,7 @@ public class DocumentChecker extends AbstractActor{
 			rejectPerson(person);
 		}
 		else {
-			printToTerminal("Person: " + person.getPersonId() + "sent to queue " 
+			printToTerminal("Person: " + person.getPersonId() + " sent to queue " 
 					+ currentQueue + ".");
 			stations[currentQueue++].tell(person);
 			currentQueue = currentQueue % stations.length;
@@ -128,6 +128,6 @@ public class DocumentChecker extends AbstractActor{
 	 */
 	public void rejectPerson(Person person){
 		printToTerminal("Person: " + person.getPersonId() 
-				+ "failed Document Check and has been sent away.");
+				+ " failed Document Check and has been sent away.");
 	}
 }

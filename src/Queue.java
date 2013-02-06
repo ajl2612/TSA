@@ -91,7 +91,7 @@ public class Queue extends AbstractActor {
 	@Override
 	public void postStop() {
 		printToTerminal("Queue " + stationNumber + 
-				"sent end of day message to bag scanner and body scanner");
+				" sent end of day message to bag scanner and body scanner");
 		baggageScanner.tell(new EndDay());
 		bodyScanner.tell(new EndDay());
 		

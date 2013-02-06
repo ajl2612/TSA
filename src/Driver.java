@@ -9,7 +9,7 @@ import akka.actor.ActorRef;
  */
 public class Driver {
 
-	private final static int NUM_SECURITY_LINES = 5;
+	private final static int NUM_SECURITY_LINES = 100;
 	
 	private final static int NUM_PEOPLE = 100;
 	
