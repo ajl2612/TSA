@@ -63,10 +63,7 @@ public class DocumentChecker extends AbstractActor{
 		 */
 		else if( message instanceof EndDay ){
 			printToTerminal("Document Cecker recieves End of Day message");
-			for(int i = 0; i < stations.length; i++){
-				printToTerminal("End of Day message sent to queue " + i );
-				stations[i].tell((EndDay)message);
-			}
+
 			getContext().stop();
 		}
 		/*
@@ -85,7 +82,11 @@ public class DocumentChecker extends AbstractActor{
 	 */
 	@Override
 	public void postStop() {
-		System.out.println("Document Check Closed" );
+		printToTerminal("Document Check Closed" );
+		for(int i = 0; i < stations.length; i++){
+			printToTerminal("End of Day message sent to queue " + i );
+			stations[i].tell(new EndDay());
+		}
 	}
 	
 	/**

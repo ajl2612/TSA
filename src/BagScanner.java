@@ -82,7 +82,6 @@ public class BagScanner extends AbstractActor {
 		else if( message instanceof EndDay){
 			printToTerminal("BodyScanner " + stationNumber + 
 					" recieved and sent end of day message to security");
-			security.tell((EndDay)message);
 			getContext().stop();
 		}
 		/*
@@ -101,7 +100,8 @@ public class BagScanner extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		System.out.println( "Baggage Scanner " + stationNumber + " Closed" );
+		printToTerminal( "Baggage Scanner " + stationNumber + " Closed" );
+		security.tell(new EndDay());
 	}
 	
 	/**

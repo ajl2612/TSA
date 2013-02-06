@@ -68,7 +68,6 @@ public class Jail extends AbstractActor {
 			if(numStationsClosed == numSecurityStations){
 				printJailed();
 				printToTerminal("Jail sent end of day message to terminal\n\n");
-				terminal.tell((EndDay)message);
 				getContext().stop();
 			}
 		}
@@ -88,7 +87,8 @@ public class Jail extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		System.out.println( "Jail Closed" );
+		printToTerminal( "Jail Closed" );
+		terminal.tell(new EndDay());
 	}
 	
 	/**

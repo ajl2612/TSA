@@ -1,4 +1,3 @@
-import java.util.concurrent.ConcurrentLinkedQueue;
 import akka.actor.ActorRef;
 
 /**
@@ -30,26 +29,6 @@ public class Queue extends AbstractActor {
 	private final int stationNumber;
 	
 	/**
-	 * Queue containing Persons waiting to enter the BodyScanner
-	 */
-	private ConcurrentLinkedQueue<Person> bodyQueue;
-	
-	/**
-	 * Queue containing Baggage waiting to enter the BagScanner
-	 */
-	private ConcurrentLinkedQueue<Baggage> baggageQueue;
-	
-	/**
-	 * Boolean representing if the BaggageScan is ready for another bag
-	 */
-	private boolean bagScanReady;
-	
-	/**
-	 * Boolean representing if the BodyScan is ready for another Person 
-	 */
-	private boolean bodyScanReady;
-	
-	/**
 	 * Constructor for Queue. 
 	 * 
 	 * @param stationNumber - what number security station this queue 
@@ -63,10 +42,6 @@ public class Queue extends AbstractActor {
 		this.stationNumber = stationNumber;
 		baggageScanner = bagScan;
 		bodyScanner = bodyScan;
-		bodyQueue = new ConcurrentLinkedQueue<Person>();
-		baggageQueue = new ConcurrentLinkedQueue<Baggage>();
-		bodyScanReady = true;
-		bagScanReady = true;
 	}
 	
 	/**
@@ -84,12 +59,6 @@ public class Queue extends AbstractActor {
 		 */
 		if (message instanceof Person) {
 			recievePerson( (Person)message );
-			if( bagScanReady && !baggageQueue.isEmpty()){
-				sendTopBagToScan();
-			}
-			if( bodyScanReady && !bodyQueue.isEmpty()){
-				sendTopBodyToScan();
-			}
 		}
 		/*
 		 * If instance of EndDay message, check to see that both the 
@@ -100,31 +69,11 @@ public class Queue extends AbstractActor {
 		 * processed.  
 		 */
 		else if( message instanceof EndDay){
-			/*
-			 * Both queues are empty, ready to shutdown. 
-			 */
-			if(bodyQueue.isEmpty() && baggageQueue.isEmpty()&& bodyScanReady && bagScanReady){
 				printToTerminal("Queue " + stationNumber + 
 						"received end of day message");
-				printToTerminal("Queue " + stationNumber + 
-						"sent end of day message to bag scanner");
-				baggageScanner.tell((EndDay)message);
-				printToTerminal("Queue " + stationNumber + 
-						"sent end of day message to body scanner");
-				bodyScanner.tell((EndDay)message);
 
 				getContext().stop();
-			}
-			/*
-			 * One or both of they queues still have elements in them waiting 
-			 * to be processed. Send the EndDay message back to self to delay 
-			 * until both are empty. 
-			 */
-			else{
-				self().tell((EndDay)message);
-			}
 		}
-		
 		/*
 		 * All other messages are errors. Message printed here for debugging
 		 * purposes.
@@ -141,7 +90,11 @@ public class Queue extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		System.out.println( "Queue " + stationNumber + " Closed" );
+		printToTerminal("Queue " + stationNumber + 
+				"sent end of day message to bag scanner and body scanner");
+		baggageScanner.tell(new EndDay());
+		bodyScanner.tell(new EndDay());
+		
 	}
 	
 	/**
@@ -161,38 +114,17 @@ public class Queue extends AbstractActor {
 	 * @param p - Person to enter into station
 	 * @return True if successful. False otherwise
 	 */
-	public boolean recievePerson(Person p){
+	public void recievePerson(Person p){
 		printToTerminal("Person: " + p.getPersonId() + "enters queue " 
-				+ stationNumber + ".");
-		boolean personStatus, bagStatus = false;
-		personStatus = bodyQueue.add(p);
-		bagStatus = baggageQueue.add(p.getBaggage());
-		return (personStatus && bagStatus);
+				+ stationNumber);
+		printToTerminal("Person: " + p.getPersonId() + "'s baggage sent to bagScan " 
+				+ stationNumber);
+		baggageScanner.tell(p.getBaggage());
+		printToTerminal("Person: " + p.getPersonId() + " sent to bodyScan " 
+				+ stationNumber);
+		bodyScanner.tell(p);
 	}
 	
-	/**
-	 * Sends the first Baggage item in the baggageQueue to the BagScanner
-	 */
-	public void sendTopBagToScan(){
-		Baggage toSend;
-		toSend = baggageQueue.poll();
-		printToTerminal("Person " + toSend.getOwner().getPersonId() 
-				+ "'s baggage sent to baggage scanner");
-		//bagScanReady = false;
-		baggageScanner.tell(toSend);
-	}
-	
-	/**
-	 * Sends a person object to the body scanner
-	 */
-	public void sendTopBodyToScan() {
-		Person toSend;
-		toSend = bodyQueue.poll();
-		printToTerminal("Person " + toSend.getPersonId() 
-				+ " sent to body scanner");
-		//bodyScanReady = false;
-		bodyScanner.tell(toSend);
-	}
 	
 	/**
 	 * Accessor for which security station this queue belongs to. 
