@@ -64,10 +64,10 @@ public class Jail extends AbstractActor {
 		 */
 		else if( message instanceof EndDay){
 			numStationsClosed++;
-			//printToTerminal("Jail recieved end of day message " + numStationsClosed);
+			printToTerminal("Jail recieved end of day message " + numStationsClosed);
 			if(numStationsClosed == numSecurityStations){
 				printJailed();
-				//printToTerminal("Jail sent end of day message to terminal");
+				printToTerminal("Jail sent end of day message to terminal\n\n");
 				terminal.tell((EndDay)message);
 				getContext().stop();
 			}
