@@ -59,6 +59,8 @@ public class Jail extends AbstractActor {
 			//System.err.println("Person " + p.getPersonId() 
 			//		+ " arrives at jail.");
 			jailed.add(p);
+			printToTerminal("Person " + p.getPersonId() 
+					+ " placed in cell.");
 		}
 		/*
 		 * When EndDay received, increment the number of stations that have 
@@ -71,7 +73,7 @@ public class Jail extends AbstractActor {
 			printToTerminal("Jail recieved end of day message " + numStationsClosed);
 			if(numStationsClosed == numSecurityStations){
 				printJailed();
-				printToTerminal("Jail sent end of day message to terminal\n\n");
+				printToTerminal( "Jail Closed" );
 				getContext().stop();
 			}
 		}
@@ -91,7 +93,7 @@ public class Jail extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		printToTerminal( "Jail Closed" );
+		printToTerminal("Jail sent end of day message to terminal\n\n");
 		terminal.tell(new EndDay());
 	}
 	

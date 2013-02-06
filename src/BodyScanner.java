@@ -58,14 +58,19 @@ public class BodyScanner extends AbstractActor {
 		 */
 		if (message instanceof Person){
 			BodyScanResults results;
+			Person p = (Person)message;
+			printToTerminal("Person " + p.getPersonId() 
+					+ "'s Baggage enters scanner");
 			boolean didPass = false;
 			try{
-				didPass = checkPerson();
+				didPass = checkPerson( p );
 			}catch( InterruptedException e){
-				System.err.println("Body Inspection Interrupted: Automatic Fail");
+				System.err.println("Body Scan Interrupted: Automatic Fail");
 				didPass = false;
 			}finally{
 				results = new BodyScanResults((Person)message, didPass);
+				printToTerminal("Person " + p.getPersonId() 
+						+ " leaves scanner");
 				security.tell(results);
 			}
 		}
@@ -113,10 +118,19 @@ public class BodyScanner extends AbstractActor {
 	 * @return - true if person passes check, false otherwise
 	 * @throws InterruptedException
 	 */
-	public boolean checkPerson() throws InterruptedException{
+	public boolean checkPerson( Person p) throws InterruptedException{
 		Random r = new Random();
 		Thread.sleep(CHECK_TIME);
-		return (r.nextInt(100) < PERCENT_FAIL);
+		if(r.nextInt(99) < PERCENT_FAIL){
+			printToTerminal("Person " + p.getPersonId() 
+					+ " has failed the body scan." );
+			return false;
+		}
+		else{
+			printToTerminal("Person " + p.getPersonId() 
+					+ " has passed the body scan." );
+			return true;
+		}
 	}
 	
 	/**

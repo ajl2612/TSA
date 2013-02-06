@@ -86,8 +86,7 @@ public class Security extends AbstractActor {
 			printToTerminal("Security " + stationNumber + 
 					" recieved end of day message " + numScannersClosed);
 			if(numScannersClosed == 2){
-				printToTerminal("Security " + stationNumber + 
-						" sent end of day message to jail");
+				printToTerminal( "Security " + stationNumber + " Closed" );
 				getContext().stop();
 
 			}
@@ -108,7 +107,8 @@ public class Security extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		printToTerminal( "Security " + stationNumber + " Closed" );
+		printToTerminal("Security " + stationNumber + 
+				" sent end of day message to jail");
 		jail.tell(new EndDay());
 	}
 	

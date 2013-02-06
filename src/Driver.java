@@ -12,15 +12,15 @@ public class Driver {
 	
 	private static int numPeople;
 	
-	private static final int MAX_PEOPLE = 1000;
+	private static final int MAX_PEOPLE = 10000;
 	
 	private static int numSecurityLines;
 	
-	private static final int MAX_SECURITY_LINES = 100;
+	private static final int MAX_SECURITY_LINES = 1000;
 	
 	private static int maxNumBags;
 	
-	private static final int MAX_BAGS_PER_PERSON = 5;
+	private static final int MAX_BAGS_PER_PERSON = 10;
 	
 	public static void main(String[] args){	
 		
@@ -70,10 +70,6 @@ public class Driver {
 		if( args.length == 4)
 			fileName = args[3];
 		
-		
-		System.err.println(numPeople);
-		System.err.println(numSecurityLines);
-		System.err.println(maxNumBags);
 		ActorRef terminal = ActorFactory.makeTerminal( fileName );
 		
 		ActorRef jail = ActorFactory.makeJail(terminal, numSecurityLines);
