@@ -19,22 +19,22 @@ public class ActorFactory {
 	/**
 	 * Number of spaces to place before Queue messages.
 	 */
-	public static final int QUEUE_SPACE = 1;
+	public static final int QUEUE_SPACE = 3;
 	
 	/**
 	 * Number of spaces to place before BagScan and BodyScan messages.
 	 */
-	public static final int SCAN_SPACE = 2;
+	public static final int SCAN_SPACE = 6;
 	
 	/**
 	 * Number of spaces to place before Security messages.
 	 */
-	public static final int SECURITY_SPACE = 3;
+	public static final int SECURITY_SPACE = 9;
 	
 	/**
 	 * Number of spaces to place before Jail messages.
 	 */
-	public static final int JAIL_SPACE = 4;
+	public static final int JAIL_SPACE = 12;
 	
 	/**
 	 * Facrory method for creating and starting a Terminal Actor

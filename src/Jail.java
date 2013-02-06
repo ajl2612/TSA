@@ -64,9 +64,13 @@ public class Jail extends AbstractActor {
 		 * shutdown all Actors
 		 */
 		else if( message instanceof EndDay){
-			if(++numStationsClosed == numSecurityStations){
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			numStationsClosed++;
+			if(numStationsClosed == numSecurityStations){
+				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 				printJailed();
-				Actors.registry().shutdownAll();
+				terminal.tell((EndDay)message);
+				getContext().stop();
 			}
 		}
 		/*
@@ -85,7 +89,7 @@ public class Jail extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		printToTerminal( "Jail Closed" );
+		System.out.println( "Jail Closed" );
 	}
 	
 	/**

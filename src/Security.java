@@ -100,7 +100,7 @@ public class Security extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		printToTerminal( "Security " + stationNumber + "Closed" );
+		System.out.println( "Security " + stationNumber + " Closed" );
 	}
 	
 	/**

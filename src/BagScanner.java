@@ -102,7 +102,7 @@ public class BagScanner extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		printToTerminal( "Baggage Scanner " + stationNumber + "Closed" );
+		System.out.println( "Baggage Scanner " + stationNumber + " Closed" );
 	}
 	
 	/**

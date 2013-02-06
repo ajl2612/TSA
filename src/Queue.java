@@ -159,7 +159,7 @@ public class Queue extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		printToTerminal( "Queue " + stationNumber + "Closed" );
+		System.out.println( "Queue " + stationNumber + " Closed" );
 	}
 	
 	/**

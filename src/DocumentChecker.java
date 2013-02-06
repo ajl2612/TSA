@@ -85,7 +85,7 @@ public class DocumentChecker extends AbstractActor{
 	 */
 	@Override
 	public void postStop() {
-		printToTerminal( "Document Check Closed" );
+		System.out.println("Document Check Closed" );
 	}
 	
 	/**

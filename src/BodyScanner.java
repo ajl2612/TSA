@@ -95,7 +95,7 @@ public class BodyScanner extends AbstractActor {
 	 */
 	@Override
 	public void postStop() {
-		printToTerminal( "Body Scanner " + stationNumber + "Closed" );
+		System.out.println( "Body Scanner " + stationNumber + " Closed" );
 	}
 	
 	/**
