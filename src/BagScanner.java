@@ -16,7 +16,7 @@ public class BagScanner extends AbstractActor {
 	/**
 	 * Time required to check a single bag in milliseconds.. 
 	 */
-	private final int CHECK_TIME = 1000;
+	private final int CHECK_TIME = 100;
 	
 	/**
 	 * Percent chance out of 100 that a given bag item will fail the document

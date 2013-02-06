@@ -6,7 +6,7 @@
  * @autor Andrew Lyne III
  *
  */
-public class Person {
+public class Person implements Comparable<Object>{
 	/**
 	 * Unique int ID associated with this Person.
 	 */
@@ -55,4 +55,23 @@ public class Person {
     	}
     	return false;
     }
+
+	@Override
+	public int compareTo(Object other) {
+		try{
+			int otherId = ((Person)other).getPersonId();
+			if( personId == otherId ){
+				return 0;
+			}
+			else if( personId > otherId ){
+				return 1;
+			}
+			return -1;
+			
+		}catch( ClassCastException e){
+			//TODO To be corrected later. 
+			return 0;
+		}
+		
+	}
 }

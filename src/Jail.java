@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+
 import akka.actor.ActorRef;
 
 /**
@@ -54,6 +56,8 @@ public class Jail extends AbstractActor {
 			Person p = (Person)message;
 			printToTerminal("Person " + p.getPersonId() 
 					+ " arrives at jail.");
+			//System.err.println("Person " + p.getPersonId() 
+			//		+ " arrives at jail.");
 			jailed.add(p);
 		}
 		/*
@@ -105,14 +109,15 @@ public class Jail extends AbstractActor {
 	 * Lists the people in Jail in a formatted list. 
 	 */
 	public void printJailed(){
-		String manifest = "Passengers Detained\n";
+		Collections.sort(jailed);
+		String manifest = "\nPassengers Detained\r\n";
 		String spacing = "";
 		for(int i=0; i<terminalSpacing; i++){
 			spacing  = spacing.concat(" ");
 		}
 		String nextLine = ""; 
 		for( Person p : jailed){
-			nextLine = spacing.concat(" - Person " + p.getPersonId() + "\n");
+			nextLine = spacing.concat(" - Person " + p.getPersonId() + "\r\n");
 			manifest = manifest.concat(nextLine);
 		}
 		printToTerminal(manifest);

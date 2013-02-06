@@ -9,11 +9,19 @@ import akka.actor.ActorRef;
  */
 public class Driver {
 
-	private static int numSecurityLines;
+
 	
 	private static int numPeople;
 	
+	private static final int MAX_PEOPLE = 10000;
+	
+	private static int numSecurityLines;
+	
+	private static final int MAX_SECURITY_LINES = 1000;
+	
 	private static int maxNumBags;
+	
+	private static final int MAX_BAGS_PER_PERSON = 10;
 	
 	public static void main(String[] args){	
 		
@@ -25,9 +33,35 @@ public class Driver {
 		}
 		String fileName = null;
 		
-		numPeople = Integer.parseInt(args[0]);
-		numSecurityLines = Integer.parseInt(args[1]);
-		maxNumBags = Integer.parseInt(args[2]);
+		try{
+			numPeople = Integer.parseInt(args[0]);
+			if( numPeople > MAX_PEOPLE)
+				throw new NumberFormatException("Too many people, using " +
+						"maximum value of " + MAX_PEOPLE);
+		}
+		catch( NumberFormatException e){
+			System.err.println(e.getMessage());
+			numPeople = MAX_PEOPLE;
+		}
+		try{
+			numSecurityLines = Integer.parseInt(args[1]);
+			throw new NumberFormatException("Too many security lines, using " +
+					"maximum value of " + MAX_SECURITY_LINES);
+		}
+		catch( NumberFormatException e){
+			System.err.println(e.getMessage());
+			numSecurityLines = MAX_SECURITY_LINES;	
+		}
+		try{
+			maxNumBags = Integer.parseInt(args[2]);
+			throw new NumberFormatException("Too many bags per person, using " +
+					"maximum value of " + MAX_BAGS_PER_PERSON);
+		}
+		catch( NumberFormatException e){
+			System.err.println( e.getMessage());
+			maxNumBags = MAX_BAGS_PER_PERSON;
+			
+		}
 	
 		if( args.length == 4)
 			fileName = args[3];

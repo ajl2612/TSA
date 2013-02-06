@@ -15,7 +15,7 @@ public class BodyScanner extends AbstractActor {
 	/**
 	 * Time required to check a single person in milliseconds.. 
 	 */
-	private int CHECK_TIME = 1000;
+	private int CHECK_TIME = 100;
 	
 	/**
 	 * Percent chance out of 100 that a given bag item will fail the document

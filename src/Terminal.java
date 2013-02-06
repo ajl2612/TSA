@@ -48,7 +48,7 @@ public class Terminal extends UntypedActor{
 			}
 			toPrint = toPrint.concat(content.getContents());
 			try{
-				buff.write( toPrint + "\n" );
+				buff.write( toPrint.concat("\r\n"));
 			}
 			catch( IOException e ){
 				System.err.println(e.getMessage());
