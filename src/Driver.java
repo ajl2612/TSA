@@ -71,6 +71,9 @@ public class Driver {
 			fileName = args[3];
 		
 		ActorRef terminal = ActorFactory.makeTerminal( fileName );
+		String toSend = "TSA running with " + numPeople + " People and " + numSecurityLines + " security lines with a maximum of " + maxNumBags + " bags per person"; 
+		Message mess1 = new Message(toSend, 0);
+		terminal.tell( mess1 );
 		
 		ActorRef jail = ActorFactory.makeJail(terminal, numSecurityLines);
 		

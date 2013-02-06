@@ -1,4 +1,5 @@
 Log Terminal Online
+TSA running with 10 People and 3 security lines with a maximum of 3 bags per person
                Jail Online
             Security 1 Online
          BodyScanner 1 Online
@@ -18,50 +19,61 @@ Log Terminal Online
    Person 2 arrives at Document Checker
    Person 2 sent to queue 1
    Person 3 arrives at Document Checker
-   Person 3 sent to queue 2
+   Person 3 failed Document Check and has been sent away.
    Person 4 arrives at Document Checker
    Person 4 failed Document Check and has been sent away.
    Person 5 arrives at Document Checker
-   Person 5 failed Document Check and has been sent away.
-      Person 1 enters queue 1
-      Person 1's baggage sent to bagScan 1
-      Person 1 sent to bodyScan 1
-      Person 3 enters queue 3
-      Person 3's baggage sent to bagScan 3
+   Person 5 sent to queue 2
+      Person 5 enters queue 3
+      Person 5's baggage sent to bagScan 3
       Person 2 enters queue 2
       Person 2's baggage sent to bagScan 2
+      Person 5 sent to bodyScan 3
       Person 2 sent to bodyScan 2
-      Person 3 sent to bodyScan 3
+         Person 5's Baggage enters scanner
          Person 2's Baggage enters scanner
+         Person 5's Baggage enters scanner
+         Person 5's Baggage leaves scanner
          Person 2's Baggage enters scanner
-         Person 3's Baggage enters scanner
-         Person 1's Baggage enters scanner
-         Person 3's Baggage enters scanner
-         Person 2's Baggage leaves scanner
-         Person 1's Baggage enters scanner
    Person 6 arrives at Document Checker
    Person 6 sent to queue 0
    Person 7 arrives at Document Checker
-   Person 7 failed Document Check and has been sent away.
+   Person 7 sent to queue 1
    Person 8 arrives at Document Checker
-   Person 8 failed Document Check and has been sent away.
+   Person 8 sent to queue 2
    Person 9 arrives at Document Checker
-   Person 9 sent to queue 1
+   Person 9 failed Document Check and has been sent away.
    Person 10 arrives at Document Checker
-            BagScan results for Person 2's bags arrived at security
-   Person 10 sent to queue 2
-            Person 2 has not yet arrived. Bags are waiting.
-      Person 6 enters queue 1
-      Person 9 enters queue 2
-      Person 6's baggage sent to bagScan 1
-      Person 9's baggage sent to bagScan 2
-      Person 6 sent to bodyScan 1
-      Person 9 sent to bodyScan 2
-      Person 10 enters queue 3
-      Person 10's baggage sent to bagScan 3
+   Person 10 sent to queue 0
+      Person 7 enters queue 2
+      Person 7's baggage sent to bagScan 2
+      Person 7 sent to bodyScan 2
+      Person 8 enters queue 3
+      Person 8's baggage sent to bagScan 3
+      Person 8 sent to bodyScan 3
    Document Cecker recieves End of Day message
-      Person 10 sent to bodyScan 3
-         Person 9's Baggage enters scanner
+         Person 8's Baggage enters scanner
+            BagScan results for Person 5's bags arrived at security
+            Person 5 has not yet arrived. Bags are waiting.
+      Person 1 enters queue 1
+      Person 1's baggage sent to bagScan 1
+      Person 1 sent to bodyScan 1
+      Person 6 enters queue 1
+      Person 6's baggage sent to bagScan 1
+      Person 6 sent to bodyScan 1
+      Person 10 enters queue 1
+      Person 10's baggage sent to bagScan 1
+      Person 10 sent to bodyScan 1
+         Person 1's Baggage enters scanner
+         Person 1's Baggage leaves scanner
+         Person 6's Baggage enters scanner
+         Person 6's Baggage leaves scanner
+         Person 10's Baggage enters scanner
+         Person 1's Baggage enters scanner
+            BagScan results for Person 1's bags arrived at security
+            Person 1 has not yet arrived. Bags are waiting.
+            BagScan results for Person 6's bags arrived at security
+            Person 6 has not yet arrived. Bags are waiting.
    Document Check Closed
    End of Day message sent to queue 0
    End of Day message sent to queue 1
@@ -69,105 +81,101 @@ Log Terminal Online
       Queue 1 received end of day message
       Queue 1 sent end of day message to bag scanner and body scanner
       Queue 2 received end of day message
-      Queue 3 received end of day message
       Queue 2 sent end of day message to bag scanner and body scanner
+      Queue 3 received end of day message
       Queue 3 sent end of day message to bag scanner and body scanner
-         Person 2 has passed the body scan.
-         Person 3 has failed the body scan.
-         Person 3 leaves scanner
+         Person 5 has passed the body scan.
+         Person 5 leaves scanner
+         Person 8's Baggage enters scanner
+            BodyScan results for Person 5 arrived at security
+            Person 5 has found their bags
+            Person 5 has cleared security! Bon Voyage!
+          Bag 0 for Person 2 has passed the bag scan
+         Person 2 has failed the body scan.
          Person 2 leaves scanner
+         Person 7's Baggage enters scanner
             BodyScan results for Person 2 arrived at security
-            Person 2 has found their bags
-         Person 10's Baggage enters scanner
-            Person 2 has cleared security! Bon Voyage!
-            BodyScan results for Person 3 arrived at security
-            Person 3's bags have not yet arrived and is waiting
-         Person 9's Baggage enters scanner
-          Bag 0 for Person 1 has passed the bag scan
-          Bag 0 for Person 3 has failed the bag scan
-         Person 1 has passed the body scan.
-         Person 1 leaves scanner
-         Person 6's Baggage enters scanner
-            BodyScan results for Person 1 arrived at security
-            Person 1's bags have not yet arrived and is waiting
-          Bag 0 for Person 9 has passed the bag scan
-         Person 10 has passed the body scan.
-         Person 10 leaves scanner
-         BodyScanner 3 recieved and sent end of day message to security
-         Body Scanner 3 Closed
-            BodyScan results for Person 10 arrived at security
-            Person 10's bags have not yet arrived and is waiting
-            Security 3 recieved end of day message 1
-          Bag 1 for Person 3 has passed the bag scan
-         Person 3's Baggage leaves scanner
-            BagScan results for Person 3's bags arrived at security
-            Person 3 has found their bags
-          Bag 1 for Person 1 has passed the bag scan
-            Person 3 has failed security! To Jail!
-         Person 9 has passed the body scan.
-         Person 9 leaves scanner
-         BodyScanner 2 recieved and sent end of day message to security
-         Body Scanner 2 Closed
-               Person 3 arrives at jail.
-               Person 3 placed in cell.
-            BodyScan results for Person 9 arrived at security
-            Person 9's bags have not yet arrived and is waiting
-            Security 2 recieved end of day message 1
-         Person 10's Baggage enters scanner
-         Person 6 has passed the body scan.
-         Person 6 leaves scanner
-         Person 10's Baggage leaves scanner
-            BodyScan results for Person 6 arrived at security
-            Person 6's bags have not yet arrived and is waiting
-         BodyScanner 1 recieved and sent end of day message to security
-         Body Scanner 1 Closed
-            Security 1 recieved end of day message 1
-            BagScan results for Person 10's bags arrived at security
-            Person 10 has found their bags
-            Person 10 has cleared security! Bon Voyage!
+            Person 2's bags have not yet arrived and is waiting
+          Bag 0 for Person 8 has passed the bag scan
+         Person 8's Baggage leaves scanner
+            BagScan results for Person 8's bags arrived at security
+            Person 8 has not yet arrived. Bags are waiting.
          BodyScanner 3 recieved and sent end of day message to security
          Baggage Scanner 3 Closed
-          Bag 1 for Person 9 has failed the bag scan
+            Security 3 recieved end of day message 1
+          Bag 0 for Person 10 has failed the bag scan
+         Person 10's Baggage leaves scanner
+         BodyScanner 1 recieved and sent end of day message to security
+         Baggage Scanner 1 Closed
+            BagScan results for Person 10's bags arrived at security
+            Person 10 has not yet arrived. Bags are waiting.
+            Security 1 recieved end of day message 1
+         Person 1 has passed the body scan.
+         Person 1 leaves scanner
+            BodyScan results for Person 1 arrived at security
+            Person 1 has found their bags
+         Person 6's Baggage enters scanner
+            Person 1 has cleared security! Bon Voyage!
+         Person 8 has passed the body scan.
+          Bag 1 for Person 2 has passed the bag scan
+         Person 8 leaves scanner
+         BodyScanner 3 recieved and sent end of day message to security
+         Body Scanner 3 Closed
+            BodyScan results for Person 8 arrived at security
+            Person 8 has found their bags
+         Person 7 has passed the body scan.
+         Person 7 leaves scanner
+            BodyScan results for Person 7 arrived at security
+            Person 7's bags have not yet arrived and is waiting
+         BodyScanner 2 recieved and sent end of day message to security
+         Body Scanner 2 Closed
+            Person 8 has cleared security! Bon Voyage!
+            Security 2 recieved end of day message 1
             Security 3 recieved end of day message 2
             Security 3 Closed
             Security 3 sent end of day message to jail
                Jail recieved end of day message 1
-          Bag 2 for Person 1 has passed the bag scan
-         Person 1's Baggage leaves scanner
-            BagScan results for Person 1's bags arrived at security
-            Person 1 has found their bags
-            Person 1 has cleared security! Bon Voyage!
-         Person 6's Baggage enters scanner
-          Bag 2 for Person 9 has failed the bag scan
-         Person 9's Baggage leaves scanner
-            BagScan results for Person 9's bags arrived at security
-            Person 9 has found their bags
-            Person 9 has failed security! To Jail!
-               Person 9 arrives at jail.
+         Person 6 has passed the body scan.
+         Person 6 leaves scanner
+         Person 10's Baggage enters scanner
+            BodyScan results for Person 6 arrived at security
+            Person 6 has found their bags
+            Person 6 has cleared security! Bon Voyage!
+          Bag 2 for Person 2 has passed the bag scan
+         Person 2's Baggage leaves scanner
+            BagScan results for Person 2's bags arrived at security
+            Person 2 has found their bags
+         Person 7's Baggage enters scanner
+            Person 2 has failed security! To Jail!
+         Person 7's Baggage leaves scanner
          BodyScanner 2 recieved and sent end of day message to security
-               Person 9 placed in cell.
+            BagScan results for Person 7's bags arrived at security
+            Person 7 has found their bags
          Baggage Scanner 2 Closed
+            Person 7 has cleared security! Bon Voyage!
             Security 2 recieved end of day message 2
             Security 2 Closed
             Security 2 sent end of day message to jail
+               Person 2 arrives at jail.
+               Person 2 placed in cell.
                Jail recieved end of day message 2
-          Bag 0 for Person 6 has passed the bag scan
-          Bag 1 for Person 6 has passed the bag scan
-          Bag 2 for Person 6 has passed the bag scan
-         Person 6's Baggage leaves scanner
-            BagScan results for Person 6's bags arrived at security
-            Person 6 has found their bags
-            Person 6 has cleared security! Bon Voyage!
+         Person 10 has passed the body scan.
+         Person 10 leaves scanner
+            BodyScan results for Person 10 arrived at security
+            Person 10 has found their bags
+            Person 10 has failed security! To Jail!
+               Person 10 arrives at jail.
+               Person 10 placed in cell.
          BodyScanner 1 recieved and sent end of day message to security
-         Baggage Scanner 1 Closed
+         Body Scanner 1 Closed
             Security 1 recieved end of day message 2
             Security 1 Closed
             Security 1 sent end of day message to jail
                Jail recieved end of day message 3
                
 Passengers Detained
-                - Person 3
-                - Person 9
+                - Person 2
+                - Person 10
 
                Jail Closed
                Jail sent end of day message to terminal
