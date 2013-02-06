@@ -79,9 +79,15 @@ public class Security extends AbstractActor {
 		 * when EndDay messages have been received from both queues. 
 		 */
 		else if( message instanceof EndDay){
-			if(++numScannersClosed == 2){
+			numScannersClosed++;
+			printToTerminal("Security " + stationNumber + 
+					"recieved end of day message " + numScannersClosed);
+			if(numScannersClosed == 2){
+				printToTerminal("Security " + stationNumber + 
+						" sent end of day message to jail");
 				jail.tell((EndDay)message);
 				getContext().stop();
+
 			}
 		}
 		/*
@@ -102,6 +108,16 @@ public class Security extends AbstractActor {
 	public void postStop() {
 		System.out.println( "Security " + stationNumber + " Closed" );
 	}
+	
+	/**
+	 * Override of default start function in actor. Prints a message to 
+	 * Terminal Actor out upon start up.  
+	 */
+	@Override
+	public void preStart() {
+		printToTerminal("Security " + stationNumber + " Online");
+	}
+	
 	
 	/**
 	 * Receives the person from BodyScanner. Checks to see if the Person's 

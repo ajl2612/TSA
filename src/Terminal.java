@@ -30,14 +30,23 @@ public class Terminal extends UntypedActor{
 		}
 	}
 		
-		/**
-		 * Override of default stop function in actor. Prints a message to 
-		 * Terminal actor before shutting down.  
-		 */
-		@Override
+    /**
+	 * Override of default stop function in actor. Prints a message to 
+	 * Terminal actor before shutting down.  
+	 */
+	@Override
 	public void postStop() {
 			System.out.println( "Print terminal shutting down" );
 	}	
+		
+	/**
+	 * Override of default start function in actor. Prints a message to 
+	 * standard out upon start up.  
+	 */
+	@Override
+	public void preStart() {
+			System.out.println( "Log Terminal Online" );
+	}
 }
 
 

@@ -76,7 +76,10 @@ public class BodyScanner extends AbstractActor {
 		else if( message instanceof EndDay){
 			printToTerminal("BodyScanner " + stationNumber + 
 					"received end of day message");
+			printToTerminal("BodyScanner " + stationNumber + 
+					"sent end of day message to security");
 			security.tell((EndDay)message);
+
 			getContext().stop();
 		}
 		/*
@@ -96,6 +99,15 @@ public class BodyScanner extends AbstractActor {
 	@Override
 	public void postStop() {
 		System.out.println( "Body Scanner " + stationNumber + " Closed" );
+	}
+	
+	/**
+	 * Override of default start function in actor. Prints a message to 
+	 * Terminal Actor out upon start up.  
+	 */
+	@Override
+	public void preStart() {
+		printToTerminal("BodyScanner " + stationNumber + " Online");
 	}
 	
 	/**

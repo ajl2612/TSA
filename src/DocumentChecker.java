@@ -89,6 +89,15 @@ public class DocumentChecker extends AbstractActor{
 	}
 	
 	/**
+	 * Override of default start function in actor. Prints a message to 
+	 * Terminal Actor out upon start up.  
+	 */
+	@Override
+	public void preStart() {
+		printToTerminal("Document Checker Online");
+	}
+	
+	/**
 	 * Attempts to enqueue the passed person into the current security 
 	 * station. A random number is generated between 0 and 100. If the number 
 	 * is less than the constant PERCENT_FAIL the person has failed the 

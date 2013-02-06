@@ -83,7 +83,10 @@ public class BagScanner extends AbstractActor {
 		else if( message instanceof EndDay){
 			printToTerminal("BagScanner " + stationNumber + 
 					"received end of day message");
+			printToTerminal("BodyScanner " + stationNumber + 
+					"sent end of day message to security");
 			security.tell((EndDay)message);
+
 			getContext().stop();
 		}
 		/*
@@ -104,6 +107,16 @@ public class BagScanner extends AbstractActor {
 	public void postStop() {
 		System.out.println( "Baggage Scanner " + stationNumber + " Closed" );
 	}
+	
+	/**
+	 * Override of default start function in actor. Prints a message to 
+	 * Terminal Actor out upon start up.  
+	 */
+	@Override
+	public void preStart() {
+		printToTerminal("BagScanner " + stationNumber + " Online");
+	}
+	
 	
 	/**
 	 * Checks the given baggage for problems. Each bag contained in the 

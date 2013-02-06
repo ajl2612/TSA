@@ -9,12 +9,9 @@ public class Driver {
 
 	private final static int NUM_SECURITY_LINES = 3;
 	
-	public static void main(String[] args){
-		System.out.println("Hello WORLD!");
-		
+	public static void main(String[] args){		
 		
 		ActorRef terminal = ActorFactory.makeTerminal();
-		terminal.tell(new Message("HelloWorld!!!",6));
 		
 		ActorRef jail = ActorFactory.makeJail(terminal, NUM_SECURITY_LINES);
 		

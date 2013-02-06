@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import akka.actor.ActorRef;
-import akka.actor.Actors;
 
 /**
  * Jail serves a double purpose. First it acts as the collector for all people
@@ -64,11 +63,11 @@ public class Jail extends AbstractActor {
 		 * shutdown all Actors
 		 */
 		else if( message instanceof EndDay){
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			numStationsClosed++;
+			//printToTerminal("Jail recieved end of day message " + numStationsClosed);
 			if(numStationsClosed == numSecurityStations){
-				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 				printJailed();
+				//printToTerminal("Jail sent end of day message to terminal");
 				terminal.tell((EndDay)message);
 				getContext().stop();
 			}
@@ -91,6 +90,16 @@ public class Jail extends AbstractActor {
 	public void postStop() {
 		System.out.println( "Jail Closed" );
 	}
+	
+	/**
+	 * Override of default start function in actor. Prints a message to 
+	 * Terminal Actor out upon start up.  
+	 */
+	@Override
+	public void preStart() {
+		printToTerminal("Jail Online");
+	}
+	
 	
 	/**
 	 * Lists the people in Jail in a formatted list. 

@@ -129,8 +129,13 @@ public class Queue extends AbstractActor {
 			if(bodyQueue.isEmpty() && baggageQueue.isEmpty()){
 				printToTerminal("Queue " + stationNumber + 
 						"received end of day message");
+				printToTerminal("Queue " + stationNumber + 
+						"sent end of day message to bag scanner");
 				baggageScanner.tell((EndDay)message);
+				printToTerminal("Queue " + stationNumber + 
+						"sent end of day message to body scanner");
 				bodyScanner.tell((EndDay)message);
+
 				getContext().stop();
 			}
 			/*
@@ -160,6 +165,15 @@ public class Queue extends AbstractActor {
 	@Override
 	public void postStop() {
 		System.out.println( "Queue " + stationNumber + " Closed" );
+	}
+	
+	/**
+	 * Override of default start function in actor. Prints a message to 
+	 * Terminal Actor out upon start up.  
+	 */
+	@Override
+	public void preStart() {
+		printToTerminal("Queue " + stationNumber + " Online");
 	}
 	
 	/**
