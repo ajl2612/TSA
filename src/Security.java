@@ -132,7 +132,7 @@ public class Security extends AbstractActor {
 	 */
 	public void receivePerson(BodyScanResults r){
 		Person p = r.getPerson();
-		printToTerminal("BodyScan results for Person" +
+		printToTerminal("BodyScan results for Person " +
 				p.getPersonId() + " arrived at security");
 		if(awaitingOwners.containsKey(p)){
 			printToTerminal("Person "+ p.getPersonId() + 
@@ -169,7 +169,7 @@ public class Security extends AbstractActor {
 			castJudgement(bagStatus, personStatus, p);
 		}else{
 			printToTerminal("Person "+ p.getPersonId() + 
-					"has not yet arrived. Bags are waiting.");
+					" has not yet arrived. Bags are waiting.");
 			awaitingOwners.put(p, r.getStatus());
 		}
 	}

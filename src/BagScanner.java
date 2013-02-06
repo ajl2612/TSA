@@ -126,13 +126,12 @@ public class BagScanner extends AbstractActor {
 	 */
 	public boolean checkBags(Baggage bags) throws InterruptedException{
 		Random r  = new Random();
-		boolean status = true;
 		for( int i=0; i< bags.getNumBags(); i++){
 			Thread.sleep(CHECK_TIME);
 			if(r.nextInt(100) < PERCENT_FAIL)
-				status = false;
+				return false;
 		}
-		return status;
+		return true;
 	}
 	
 	/**

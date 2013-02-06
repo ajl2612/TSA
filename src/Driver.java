@@ -9,19 +9,18 @@ import akka.actor.ActorRef;
  */
 public class Driver {
 
-
 	
 	private static int numPeople;
 	
-	private static final int MAX_PEOPLE = 10000;
+	private static final int MAX_PEOPLE = 1000;
 	
 	private static int numSecurityLines;
 	
-	private static final int MAX_SECURITY_LINES = 1000;
+	private static final int MAX_SECURITY_LINES = 100;
 	
 	private static int maxNumBags;
 	
-	private static final int MAX_BAGS_PER_PERSON = 10;
+	private static final int MAX_BAGS_PER_PERSON = 5;
 	
 	public static void main(String[] args){	
 		
@@ -35,9 +34,10 @@ public class Driver {
 		
 		try{
 			numPeople = Integer.parseInt(args[0]);
-			if( numPeople > MAX_PEOPLE)
+			if( numPeople > MAX_PEOPLE){
 				throw new NumberFormatException("Too many people, using " +
 						"maximum value of " + MAX_PEOPLE);
+			}
 		}
 		catch( NumberFormatException e){
 			System.err.println(e.getMessage());
@@ -45,8 +45,10 @@ public class Driver {
 		}
 		try{
 			numSecurityLines = Integer.parseInt(args[1]);
-			throw new NumberFormatException("Too many security lines, using " +
+			if(numSecurityLines > MAX_SECURITY_LINES){
+				throw new NumberFormatException("Too many security lines, using " +
 					"maximum value of " + MAX_SECURITY_LINES);
+			}
 		}
 		catch( NumberFormatException e){
 			System.err.println(e.getMessage());
@@ -54,8 +56,10 @@ public class Driver {
 		}
 		try{
 			maxNumBags = Integer.parseInt(args[2]);
-			throw new NumberFormatException("Too many bags per person, using " +
+			if(maxNumBags > MAX_BAGS_PER_PERSON){
+				throw new NumberFormatException("Too many bags per person, using " +
 					"maximum value of " + MAX_BAGS_PER_PERSON);
+			}
 		}
 		catch( NumberFormatException e){
 			System.err.println( e.getMessage());
@@ -66,6 +70,10 @@ public class Driver {
 		if( args.length == 4)
 			fileName = args[3];
 		
+		
+		System.err.println(numPeople);
+		System.err.println(numSecurityLines);
+		System.err.println(maxNumBags);
 		ActorRef terminal = ActorFactory.makeTerminal( fileName );
 		
 		ActorRef jail = ActorFactory.makeJail(terminal, numSecurityLines);

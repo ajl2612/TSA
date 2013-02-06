@@ -70,7 +70,7 @@ public class Queue extends AbstractActor {
 		 */
 		else if( message instanceof EndDay){
 				printToTerminal("Queue " + stationNumber + 
-						"received end of day message");
+						" received end of day message");
 
 				getContext().stop();
 		}
@@ -115,7 +115,7 @@ public class Queue extends AbstractActor {
 	 * @return True if successful. False otherwise
 	 */
 	public void recievePerson(Person p){
-		printToTerminal("Person " + p.getPersonId() + "enters queue " 
+		printToTerminal("Person " + p.getPersonId() + " enters queue " 
 				+ stationNumber);
 		printToTerminal("Person " + p.getPersonId() + "'s baggage sent to bagScan " 
 				+ stationNumber);
