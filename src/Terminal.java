@@ -15,7 +15,11 @@ public class Terminal extends UntypedActor{
 	
 	private BufferedWriter buff = null;
 	
-	
+	/**
+	 * Constructs a terminal which handles the printing of messages.
+	 * 
+	 * @param filename
+	 */
 	public Terminal( String filename ){
 		if(filename == null){
 			buff = new BufferedWriter( new OutputStreamWriter( System.out));
@@ -30,6 +34,10 @@ public class Terminal extends UntypedActor{
 		}
 
 	}
+	
+	/**
+	 * Handles the printing of messages for different instances.
+	 */
 	public void onReceive( Object message ){
 		if( message instanceof Message){
 			
@@ -50,7 +58,7 @@ public class Terminal extends UntypedActor{
 		
 		if(message instanceof EndDay ){
 			try{
-				buff.write("Terminal recieved end of say message.");
+				buff.write("Terminal recieved end of day message.");
 				buff.newLine();
 			}
 			catch( IOException e ){
