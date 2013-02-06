@@ -63,6 +63,10 @@ public class Queue extends AbstractActor {
 		this.stationNumber = stationNumber;
 		baggageScanner = bagScan;
 		bodyScanner = bodyScan;
+		bodyQueue = new ConcurrentLinkedQueue<Person>();
+		baggageQueue = new ConcurrentLinkedQueue<Baggage>();
+		bodyScanReady = true;
+		bagScanReady = true;
 	}
 	
 	/**
