@@ -1,3 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 import akka.actor.UntypedActor;
 
 /**
@@ -8,6 +13,23 @@ import akka.actor.UntypedActor;
  */
 public class Terminal extends UntypedActor{
 	
+	private BufferedWriter buff = null;
+	
+	
+	public Terminal( String filename ){
+		if(filename == null){
+			buff = new BufferedWriter( new OutputStreamWriter( System.out));
+		}else{
+			try{
+				buff = new BufferedWriter( new FileWriter(filename));
+			}
+			catch(IOException e){
+				System.err.println(e.getMessage());
+				buff = new BufferedWriter( new OutputStreamWriter( System.out));
+			}
+		}
+
+	}
 	public void onReceive( Object message ){
 		if( message instanceof Message){
 			
@@ -17,16 +39,29 @@ public class Terminal extends UntypedActor{
 				toPrint = toPrint.concat(" ");
 			}
 			toPrint = toPrint.concat(content.getContents());
-			System.out.println( toPrint );
+			try{
+				buff.write( toPrint + "\n" );
+			}
+			catch( IOException e ){
+				System.err.println(e.getMessage());
+				System.out.println(toPrint);
+			}
 		}else
 		
 		if(message instanceof EndDay ){
-			System.out.println("Terminal recieved end of say message.");
-			getContext().stop();	
+			try{
+				buff.write("Terminal recieved end of say message.");
+				buff.newLine();
+			}
+			catch( IOException e ){
+				System.err.println(e.getMessage());
+			}finally{
+				getContext().stop();
+			}
 		}
 		else{
-			System.out.println("Terminal recieved invalid message: " +
-					message.toString());
+			System.err.println("Terminal recieved invalid message: " +
+				message.toString());	
 		}
 	}
 		
@@ -36,7 +71,13 @@ public class Terminal extends UntypedActor{
 	 */
 	@Override
 	public void postStop() {
-			System.out.println( "Print terminal shutting down" );
+			try {
+				buff.write( "Print terminal shutting down" );
+				buff.newLine();
+				buff.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}	
 		
 	/**
@@ -45,7 +86,12 @@ public class Terminal extends UntypedActor{
 	 */
 	@Override
 	public void preStart() {
-			System.out.println( "Log Terminal Online" );
+			try {
+				buff.write( "Log Terminal Online" );
+				buff.newLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 }
 

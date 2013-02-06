@@ -41,8 +41,15 @@ public class ActorFactory {
 	 * 
 	 * @return Terminal Actor 
 	 */
-	public static ActorRef makeTerminal(){
-		ActorRef term = actorOf( Terminal.class );
+	public static ActorRef makeTerminal(final String filename){
+		ActorRef term = actorOf( new UntypedActorFactory(){
+			// Inline override of default constructor call to one implemented
+			@Override
+			public Actor create(){
+				return new Terminal(filename);
+			}
+		});
+
 		term.start();
 		return term;
 	}

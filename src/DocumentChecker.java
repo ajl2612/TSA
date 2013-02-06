@@ -54,7 +54,7 @@ public class DocumentChecker extends AbstractActor{
 		if( message instanceof Person){
 			Person p = (Person)message;
 			printToTerminal("Person " + p.getPersonId() + 
-					" arrives at Document Checker.");
+					" arrives at Document Checker");
 			trySendPersonToQueue( p );
 		}
 		/*
@@ -114,8 +114,8 @@ public class DocumentChecker extends AbstractActor{
 			rejectPerson(person);
 		}
 		else {
-			printToTerminal("Person: " + person.getPersonId() + " sent to queue " 
-					+ currentQueue + ".");
+			printToTerminal("Person " + person.getPersonId() + " sent to queue " 
+					+ currentQueue );
 			stations[currentQueue++].tell(person);
 			currentQueue = currentQueue % stations.length;
 		}
@@ -127,7 +127,7 @@ public class DocumentChecker extends AbstractActor{
 	 * @param person
 	 */
 	public void rejectPerson(Person person){
-		printToTerminal("Person: " + person.getPersonId() 
+		printToTerminal("Person " + person.getPersonId() 
 				+ " failed Document Check and has been sent away.");
 	}
 }

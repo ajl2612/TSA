@@ -53,7 +53,7 @@ public class Jail extends AbstractActor {
 		if (message instanceof Person) {
 			Person p = (Person)message;
 			printToTerminal("Person " + p.getPersonId() 
-					+ "arrives at jail.");
+					+ " arrives at jail.");
 			jailed.add(p);
 		}
 		/*
@@ -112,7 +112,7 @@ public class Jail extends AbstractActor {
 		}
 		String nextLine = ""; 
 		for( Person p : jailed){
-			nextLine = spacing.concat(" - Person" + p.getPersonId() + "\n");
+			nextLine = spacing.concat(" - Person " + p.getPersonId() + "\n");
 			manifest = manifest.concat(nextLine);
 		}
 		printToTerminal(manifest);

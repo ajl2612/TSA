@@ -115,12 +115,12 @@ public class Queue extends AbstractActor {
 	 * @return True if successful. False otherwise
 	 */
 	public void recievePerson(Person p){
-		printToTerminal("Person: " + p.getPersonId() + "enters queue " 
+		printToTerminal("Person " + p.getPersonId() + "enters queue " 
 				+ stationNumber);
-		printToTerminal("Person: " + p.getPersonId() + "'s baggage sent to bagScan " 
+		printToTerminal("Person " + p.getPersonId() + "'s baggage sent to bagScan " 
 				+ stationNumber);
 		baggageScanner.tell(p.getBaggage());
-		printToTerminal("Person: " + p.getPersonId() + " sent to bodyScan " 
+		printToTerminal("Person " + p.getPersonId() + " sent to bodyScan " 
 				+ stationNumber);
 		bodyScanner.tell(p);
 	}
