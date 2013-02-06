@@ -7,7 +7,9 @@ import akka.actor.ActorRef;
  */
 public class Driver {
 
-	private final static int NUM_SECURITY_LINES = 3;
+	private final static int NUM_SECURITY_LINES = 2;
+	
+	private final static int NUM_PEOPLE = 5;
 	
 	public static void main(String[] args){		
 		
@@ -21,6 +23,10 @@ public class Driver {
 		}
 		ActorRef docCheck = ActorFactory.makeDocumentChecker(terminal, queues);
 		docCheck.start();
+		
+		for( int i = 0; i < NUM_PEOPLE; i++){
+			docCheck.tell(new Person(i,0));
+		}
 		
 		docCheck.tell( new EndDay());
 		

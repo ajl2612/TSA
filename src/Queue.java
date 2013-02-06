@@ -126,7 +126,7 @@ public class Queue extends AbstractActor {
 			/*
 			 * Both queues are empty, ready to shutdown. 
 			 */
-			if(bodyQueue.isEmpty() && baggageQueue.isEmpty()){
+			if(bodyQueue.isEmpty() && baggageQueue.isEmpty()&& bodyScanReady && bagScanReady){
 				printToTerminal("Queue " + stationNumber + 
 						"received end of day message");
 				printToTerminal("Queue " + stationNumber + 
@@ -201,7 +201,7 @@ public class Queue extends AbstractActor {
 		toSend = baggageQueue.poll();
 		printToTerminal("Person " + toSend.getOwner().getPersonId() 
 				+ "'s baggage sent to baggage scanner");
-		bagScanReady = false;
+		//bagScanReady = false;
 		baggageScanner.tell(toSend);
 	}
 	
@@ -213,7 +213,7 @@ public class Queue extends AbstractActor {
 		toSend = bodyQueue.poll();
 		printToTerminal("Person " + toSend.getPersonId() 
 				+ " sent to body scanner");
-		bodyScanReady = false;
+		//bodyScanReady = false;
 		bodyScanner.tell(toSend);
 	}
 	

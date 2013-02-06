@@ -1,3 +1,4 @@
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import akka.actor.ActorRef;
 
@@ -52,6 +53,8 @@ public class Security extends AbstractActor {
     	super(ActorFactory.SECURITY_SPACE, terminal);
 		this.jail = jail;
 		this.stationNumber = stationNumber;
+		awaitingBaggage = new ConcurrentHashMap<Person,Boolean>();
+		awaitingOwners = new ConcurrentHashMap<Person,Boolean>();
 		numScannersClosed = 0;
     }
     
@@ -66,12 +69,14 @@ public class Security extends AbstractActor {
 		 */
 		if (message instanceof BodyScanResults) {
 			receivePerson((BodyScanResults)message);
+			System.out.println("OHHIHIHIHIH");
 		}
 		/*
 		 * Decouple results from Baggage and process
 		 */
 		else if( message instanceof BagScanResults){
 			receiveBaggage((BagScanResults)message);
+			System.out.println("OHHIHIHIHIH");
 		}
 		/*
 		 * If instance of EndDay check the number of Scanners that have 
@@ -186,18 +191,9 @@ public class Security extends AbstractActor {
 					" has cleared security! Bon Voyage!");
 		}
 		else{
-			sendToJail( p );
+			printToTerminal("Person "+ p.getPersonId() + 
+					" has failed security! To Jail!");
+			jail.tell(p);
 		}
-	}
-
-	/**
-	 * Sends the passed person to Jail. 
-	 * 
-	 * @param person - the bad person to send to jail.
-	 */
-	public void sendToJail(Person person){
-		printToTerminal("Person "+ person.getPersonId() + 
-				" has failed security! To Jail!");
-		jail.tell(person);
 	}
 }

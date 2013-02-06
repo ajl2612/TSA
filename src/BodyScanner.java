@@ -15,7 +15,7 @@ public class BodyScanner extends AbstractActor {
 	/**
 	 * Time required to check a single person in milliseconds.. 
 	 */
-	private int CHECK_TIME = 2000;
+	private int CHECK_TIME = 0;
 	
 	/**
 	 * Percent chance out of 100 that a given bag item will fail the document
@@ -67,7 +67,9 @@ public class BodyScanner extends AbstractActor {
 			}finally{
 				results = new BodyScanResults((Person)message, didPass);
 				security.tell(results);
-				this.getContext().reply( new NextBody() );
+				System.out.println("ERRORRRRRRRR");
+				//this.getContext().reply( new NextBody() );
+				System.out.println("OHHIIIIITHERERERE77777777777777777777777777777777777777777777777777777RE");
 			}
 		}
 		/*
@@ -75,11 +77,8 @@ public class BodyScanner extends AbstractActor {
 		 */
 		else if( message instanceof EndDay){
 			printToTerminal("BodyScanner " + stationNumber + 
-					"received end of day message");
-			printToTerminal("BodyScanner " + stationNumber + 
-					"sent end of day message to security");
+					" recieved and sent end of day message to security");
 			security.tell((EndDay)message);
-
 			getContext().stop();
 		}
 		/*

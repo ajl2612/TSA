@@ -74,19 +74,16 @@ public class BagScanner extends AbstractActor {
 				printToTerminal("Person " + b.getOwner().getPersonId() 
 						+ "'s Baggage leaves scanner");
 				security.tell(results);
-				this.getContext().reply( new NextBag() );
+				//this.getContext().reply( new NextBag() );
 			}
 		}
 		/*
 		 * If instance of EndDay pass message along to Security
 		 */
 		else if( message instanceof EndDay){
-			printToTerminal("BagScanner " + stationNumber + 
-					"received end of day message");
 			printToTerminal("BodyScanner " + stationNumber + 
-					"sent end of day message to security");
+					" recieved and sent end of day message to security");
 			security.tell((EndDay)message);
-
 			getContext().stop();
 		}
 		/*
