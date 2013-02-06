@@ -67,9 +67,6 @@ public class BodyScanner extends AbstractActor {
 			}finally{
 				results = new BodyScanResults((Person)message, didPass);
 				security.tell(results);
-				System.out.println("ERRORRRRRRRR");
-				//this.getContext().reply( new NextBody() );
-				System.out.println("OHHIIIIITHERERERE77777777777777777777777777777777777777777777777777777RE");
 			}
 		}
 		/*

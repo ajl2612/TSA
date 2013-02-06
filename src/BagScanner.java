@@ -74,7 +74,6 @@ public class BagScanner extends AbstractActor {
 				printToTerminal("Person " + b.getOwner().getPersonId() 
 						+ "'s Baggage leaves scanner");
 				security.tell(results);
-				//this.getContext().reply( new NextBag() );
 			}
 		}
 		/*

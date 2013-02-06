@@ -69,14 +69,12 @@ public class Security extends AbstractActor {
 		 */
 		if (message instanceof BodyScanResults) {
 			receivePerson((BodyScanResults)message);
-			System.out.println("OHHIHIHIHIH");
 		}
 		/*
 		 * Decouple results from Baggage and process
 		 */
 		else if( message instanceof BagScanResults){
 			receiveBaggage((BagScanResults)message);
-			System.out.println("OHHIHIHIHIH");
 		}
 		/*
 		 * If instance of EndDay check the number of Scanners that have 

@@ -63,15 +63,11 @@ public class Queue extends AbstractActor {
 		this.stationNumber = stationNumber;
 		baggageScanner = bagScan;
 		bodyScanner = bodyScan;
-		bodyQueue = new ConcurrentLinkedQueue<Person>();
-		baggageQueue = new ConcurrentLinkedQueue<Baggage>();
-		bodyScanReady = true;
-		bagScanReady = true;
 	}
 	
 	/**
 	 * Redefinition of OnRecieve method from Actor. This class handles messages
-	 * of EndDay, NextBag, NextBody and Person types.  
+	 * of EndDay and Person types.  
 	 */
 	@Override
 	public void onReceive(Object message){
@@ -89,29 +85,6 @@ public class Queue extends AbstractActor {
 			}
 			if( bodyScanReady && !bodyQueue.isEmpty()){
 				sendTopBodyToScan();
-			}
-		}
-		/*
-		 * Message signaling that the baggageScanner is ready for input. If 
-		 * there is Baggage in the bodyQueue, send that Baggage to the 
-		 * baggegeScanner. Otherwise do nothing. 
-		 */
-		else if( message instanceof NextBag){
-			bagScanReady = true;
-			if( !baggageQueue.isEmpty()){
-				sendTopBagToScan();
-			}
-		}
-		/*
-		 * Message signaling that the bodyScanner is ready for input. If there 
-		 * is a Person in the bodyQueue, send that person to the bodyScanner.
-		 * Otherwise do nothing. 
-		 */
-		else if( message instanceof NextBody){
-			bodyScanReady = true;
-			if( !bodyQueue.isEmpty()){
-				sendTopBodyToScan();
-				bodyScanReady = false;
 			}
 		}
 		/*

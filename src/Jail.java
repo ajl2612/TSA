@@ -108,11 +108,11 @@ public class Jail extends AbstractActor {
 		String manifest = "Passengers Detained\n";
 		String spacing = "";
 		for(int i=0; i<terminalSpacing; i++){
-			spacing  = spacing.concat("");
+			spacing  = spacing.concat(" ");
 		}
 		String nextLine = ""; 
 		for( Person p : jailed){
-			nextLine = spacing + "- Person" + p.getPersonId() + "\n";
+			nextLine = spacing.concat(" - Person" + p.getPersonId() + "\n");
 			manifest = manifest.concat(nextLine);
 		}
 		printToTerminal(manifest);
